@@ -40,18 +40,33 @@ public class LoginRegister extends HttpServlet {
 				while(result.next()){
 					if(result.getString("username").equals(username)) {
 						if(result.getString("password").equals(password)) {
-							request.setAttribute("message", "");
-							request.setAttribute("usernameLoggedIn", username);
-							request.getRequestDispatcher("LandingPage.jsp").forward(request,response);
-							return;
+							if(username.equals("admin")) {
+								request.setAttribute("message", "");
+								request.getRequestDispatcher("AdminPage.jsp").forward(request,response);
+								con.close();
+								return;
+							}else if(username.equals("customerrep")){
+								request.setAttribute("message", "");
+								request.getRequestDispatcher("CustomerRepPage.jsp").forward(request,response);
+								con.close();
+								return;
+							}else {
+								request.setAttribute("message", "");
+								request.setAttribute("usernameLoggedIn", username);
+								request.getRequestDispatcher("LandingPage.jsp").forward(request,response);
+								con.close();
+								return;
+							}
 						}else {
 							request.setAttribute("message", "Incorrect password.");
 							request.getRequestDispatcher("Login.jsp").forward(request,response);
+							con.close();
 							return;
 						}
 					}
 				}
 				
+				con.close();
 				request.setAttribute("message", "Could not find user.");
 				request.getRequestDispatcher("Login.jsp").forward(request,response);
 				
@@ -69,6 +84,7 @@ public class LoginRegister extends HttpServlet {
 				
 				while(result.next()){
 					if(result.getString("username").equals(username)) {
+						con.close();
 						request.setAttribute("message", "Username is already in use.");
 						request.getRequestDispatcher("Register.jsp").forward(request,response);
 						return;

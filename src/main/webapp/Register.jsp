@@ -32,7 +32,11 @@
 	         <br />
 	         Password: <input type="text" name="password" />
 	         <br />
+	         <span>
 	         <input type="submit" name="submit" value="register" />
+	         <input type="button" value="Back to Login!" onclick="window.location='Login.jsp'" >
+	         </span>
+	         
       	</form>
 		<br>
 		<p>${message}</p>
