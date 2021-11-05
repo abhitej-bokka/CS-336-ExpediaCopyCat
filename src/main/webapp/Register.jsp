@@ -13,7 +13,7 @@
 	
 	<body>
 
-		Login <!-- the usual HTML way -->
+		Register <!-- the usual HTML way -->
 		<br>
 	
 		 <!-- Show html form to i) display something, ii) choose an action via a 
@@ -21,15 +21,20 @@
 		<!-- forms are used to collect user input 
 			The default method when submitting form data is GET.
 			However, when GET is used, the submitted form data will be visible in the page address field-->
-		<form action = "LoginRegister" method = "POST">
+		<form action = "LoginRegister" method="POST">
+			 First Name: <input type="text" name="firstName" />
+	         <br />
+	         Last Name: <input type="text" name="lastName" />
+	         <br />
+	         Email: <input type="text" name="email" />
+	         <br />
 	         Username: <input type="text" name="username">
 	         <br />
 	         Password: <input type="text" name="password" />
 	         <br />
-	         <input type="submit" name="submit" value="login" />
+	         <input type="submit" name="submit" value="register" />
       	</form>
 		<br>
-		<input type="button" value="load" onclick="window.location='Register.jsp'" >
 		<p>${message}</p>
 
 </body>
