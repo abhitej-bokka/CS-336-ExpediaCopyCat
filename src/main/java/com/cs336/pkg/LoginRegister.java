@@ -30,6 +30,7 @@ public class LoginRegister extends HttpServlet {
 			String password = request.getParameter("password");
 			String submitType = request.getParameter("submit");
 			
+			
 			if(submitType.equals("login")) {
 				
 				String str = "SELECT username, password FROM customers";
@@ -39,16 +40,19 @@ public class LoginRegister extends HttpServlet {
 				while(result.next()){
 					if(result.getString("username").equals(username)) {
 						if(result.getString("password").equals(password)) {
-							System.out.println("it works");
 							request.setAttribute("message", "");
 							request.setAttribute("usernameLoggedIn", username);
 							request.getRequestDispatcher("LandingPage.jsp").forward(request,response);
+							return;
+						}else {
+							request.setAttribute("message", "Incorrect password.");
+							request.getRequestDispatcher("Login.jsp").forward(request,response);
 							return;
 						}
 					}
 				}
 				
-				request.setAttribute("message", "Could not find user in database!");
+				request.setAttribute("message", "Could not find user.");
 				request.getRequestDispatcher("Login.jsp").forward(request,response);
 				
 

@@ -29,7 +29,7 @@
 	         <input type="submit" name="submit" value="login" />
       	</form>
 		<br>
-		<input type="button" value="load" onclick="window.location='Register.jsp'" >
+		<input type="button" value="Register Here!" onclick="window.location='Register.jsp'" >
 		<p>${message}</p>
 
 </body>
