@@ -14,5 +14,6 @@
 	<body>
 		This is the Customer Representative Panel! <!-- the usual HTML way -->
 		<br>
+		<input type="button" value="Log Out!" onclick="window.location='Login.jsp'" >
 	</body>
 </html>

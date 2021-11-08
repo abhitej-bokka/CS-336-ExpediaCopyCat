@@ -14,5 +14,6 @@
 	<body>
 		Welcome to our traveling website, ${usernameLoggedIn}! <!-- the usual HTML way -->
 		<br>
+		<input type="button" value="Log Out!" onclick="window.location='Login.jsp'" >
 	</body>
 </html>
