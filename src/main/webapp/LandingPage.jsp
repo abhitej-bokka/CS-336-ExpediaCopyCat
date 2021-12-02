@@ -14,5 +14,7 @@
 	<body>
 		Welcome to our traveling website, ${usernameLoggedIn}! <!-- the usual HTML way -->
 		<br>
+		<input type="button" value="Log Out!" onclick="window.location='Login.jsp'" >
+		<input type="button" value="Search for flights!" onclick="window.location='FlightSearch.jsp'" >
 	</body>
 </html>
