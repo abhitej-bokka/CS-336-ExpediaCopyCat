@@ -11,7 +11,7 @@
 	<br>
 	<br>
 	
-	<form action="#"  method="POST">
+	<form action="FlightSearchQuery.jsp" method="POST">
 	
 		Filters:
 	
@@ -38,11 +38,6 @@
 		    <option value="flightDuration">Flight Duration (asc)</option>
 	    </select>
 	
-	
-		<input type="radio" id="oneWay" name="tripType" value="oneWay">
-		<label for="oneWay">One Way</label>
-		<input type="radio" id="roundTrip" name="tripType" value="roundTrip">
-		<label for="roundtrip">Round Trip</label><br>
 		<label for="start">Start Date: </label>
 		<input type="date" id="start" name="trip-start" value="2021-12-05" min="202021-12-05" max="2022-03-05">
     
@@ -50,10 +45,6 @@
 	    <br>
 	    <br>
     
-		<input type="radio" id="oneWay" name="tripType" value="oneWay">
-		<label for="child">One Way</label>
-		<input type="radio" id="roundTrip" name="tripType" value="roundTrip">
-		<label for="adult">Round Trip</label><br>
 		<label for="start">Start Date: </label>
 		<input type="date" id="start" name="trip-start" value="2021-12-05" min="202021-12-05" max="2022-03-05">
 		<label for="start">End Date: </label>
@@ -61,7 +52,11 @@
 		
 		<br>
 		
-		<input type="radio" id="searchByOneDate" name="searchDateType" value="searchByOneDate">
+		<input type="radio" id="oneWay" name="tripType" value="isOneWay" checked>
+		<label for="child">One Way</label>
+		<input type="radio" id="roundTrip" name="tripType" value="isRoundTrip">
+		<label for="adult">Round Trip</label><br>
+		<input type="radio" id="searchByOneDate" name="searchDateType" value="searchByOneDate" checked>
 		<label for="oneWay">Search by single date</label>
 		<input type="radio" id="searchByFlexibleDate" name="searchDateType" value="searchByFlexibleDate">
 		<label for="roundtrip">Search by flexible date</label><br>
