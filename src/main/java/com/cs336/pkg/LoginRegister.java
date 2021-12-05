@@ -21,12 +21,12 @@ public class LoginRegister extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
-			ApplicationDB db = new ApplicationDB();	
+			ApplicationDB db = new ApplicationDB();
 			Connection con = db.getConnection();
 			Statement stmt = con.createStatement();
 	
 			//Get parameters from the HTML form at the index.jsp
-			String username = request.getParameter("username");
+			String username = request.getParameter("username"); 
 			String password = request.getParameter("password");
 			String submitType = request.getParameter("submit");
 			
@@ -41,16 +41,19 @@ public class LoginRegister extends HttpServlet {
 					if(result.getString("username").equals(username)) {
 						if(result.getString("password").equals(password)) {
 							if(username.equals("admin")) {
+								ApplicationDB.currentUsername = "admin";
 								request.setAttribute("message", "");
 								request.getRequestDispatcher("AdminPage.jsp").forward(request,response);
 								con.close();
 								return;
 							}else if(username.equals("customerrep")){
+								ApplicationDB.currentUsername = "customerrep";
 								request.setAttribute("message", "");
 								request.getRequestDispatcher("CustomerRepPage.jsp").forward(request,response);
 								con.close();
 								return;
 							}else {
+								ApplicationDB.currentUsername = username;
 								request.setAttribute("message", "");
 								request.setAttribute("usernameLoggedIn", username);
 								request.getRequestDispatcher("LandingPage.jsp").forward(request,response);

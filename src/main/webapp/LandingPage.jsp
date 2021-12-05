@@ -16,9 +16,8 @@
 		<br>
 		<input type="button" value="Log Out!" onclick="window.location='Login.jsp'" >
 		<input type="button" value="Search for flights!" onclick="window.location='FlightSearch.jsp'" >
-		<input type="button" value="View Past Reservations!" onclick="window.location='FlightSearch.jsp'" >
-		<input type="button" value="View Upcoming Reservations!" onclick="window.location='FlightSearch.jsp'" >
-		<input type="button" value="View Past Reservations!" onclick="window.location='FlightSearch.jsp'" >
+		<input type="button" value="View Past Reservations!" onclick="window.location='PastReservations.jsp'" >
+		<input type="button" value="View Upcoming Reservations!" onclick="window.location='CurrentReservations.jsp'" >
 		<form action="#"  method="POST">
 			<label for="specificAirline">Send a question!:</label>
 	  		<input type="text" id="specificAirlineFilter" name="specificAirlineFilter"><br>		

@@ -15,16 +15,16 @@
 		This is the Customer Representative Panel! <!-- the usual HTML way -->
 		<br>
 		<br>
-		<form action="#"  method="POST">
+		<form action="AddReservation.jsp"  method="POST">
 			<label for="salesReport">Make a flight reservation for a specific customer: </label><br>
-	  		<input type="text" id="flightNumber" name="flightNumber" placeholder="Enter flight id"><br>
-	  		<input type="text" id="customerName" name="customerName" placeholder="Enter customer name"><br>		
+	  		<input type="text" id="ticketNumber" name="ticketNumber" placeholder="Enter ticket number"><br>
+	  		<input type="text" id="customerName" name="customerName" placeholder="Enter customer username"><br>		
 			<input type="submit" name="submit" value="Add Flight Reservation!">
 		</form><br>
-		<form action="#"  method="POST">
+		<form action="ViewAllReservations.jsp"  method="POST">
 			View Customer's Flight Reservations:
-	  		<input type="text" id="customerName" name="customerName" placeholder="Enter Customer Name"><br>		
-			<input type="submit" name="submit" value="View flight reservations!">
+	  		<input type="text" id="customerName" name="customerName" placeholder="Enter Customer username"><br>		
+			<input type="submit" name="submit" value="View flight reservations!" onclick="window.location='ViewAllReservations.jsp'">
 		</form><br>
 		<input type="button" value="View Customer Questions!" onclick="window.location='Login.jsp'" >
 		<br>		

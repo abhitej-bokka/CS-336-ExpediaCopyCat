@@ -25,8 +25,8 @@
 	  	<input type="time" id="takeOffStartTime" name="takeOffStartTime" min="00:00" max="23:59">
 	  	<input type="time" id="takeOffEndTime" name="takeOffEndTime" min="00:00" max="23:59"><br>
 	  	<label for="landingTime">Landing Time: (enter time in Universal Format, e.g 13:40)</label>
-	  	<input type="time" id="landingTimeStartTime" name="landingTimeStartTime" min="00:00" max="23:59">
-	  	<input type="time" id="landingTimeEndTime" name="landingTimeEndTime" min="00:00" max="23:59"><br><br>
+	  	<input type="time" id="landingStartTime" name="landingStartTime" min="00:00" max="23:59">
+	  	<input type="time" id="landingEndTime" name="landingEndTime" min="00:00" max="23:59"><br><br>
 	  	
 	  	<br>
 	  	<br>
@@ -64,6 +64,8 @@
 		<br>
 		
 		<input type="submit" name="submit" value="Search!"/>
+		
+		<input type="button" value="Back to landing page!" onclick="window.location='LandingPage.jsp'" >
 		
 		
     </form>
