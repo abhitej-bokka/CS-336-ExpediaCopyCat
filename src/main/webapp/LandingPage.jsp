@@ -20,7 +20,5 @@
 		<input type="button" value="View Upcoming Reservations!" onclick="window.location='FlightSearch.jsp'" >
 		<input type="button" value="View Past Reservations!" onclick="window.location='FlightSearch.jsp'" >
 		<input type="button" value="Visit the Forum!" onclick="window.location='Forum.jsp'" >
-		
->>>>>>> 817220900155986d7c6a5923ba9fe6533d37cd2a
 	</body>
 </html>
