@@ -33,7 +33,9 @@
 		<input type="button" value="View Airports!" onclick="window.location='Login.jsp'" >
 		<br>		
 		<input type="button" value="View Flights!" onclick="window.location='Login.jsp'" >
-		<br>		
+		<br>	
+		<input type="button" value="Visit the Forum!" onclick="window.location='Forum.jsp'" >
+		<br>	
 		<form action="#"  method="POST">
 			View Waitlist for specific flight:
 	  		<input type="text" id="flightNumber" name="flightNumber" placeholder="Enter Flight ID"><br>		

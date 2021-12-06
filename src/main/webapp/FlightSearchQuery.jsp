@@ -18,7 +18,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Flight Search</title>
+		<title>Flight Search Query</title>
 	</head>
 	<body>
 	
