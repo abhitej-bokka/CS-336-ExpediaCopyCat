@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 public class ApplicationDB {
 	
+	public static String currentUsername = "";
+	
 	public ApplicationDB(){
 		
 	}
@@ -13,7 +15,7 @@ public class ApplicationDB {
 	public Connection getConnection(){
 		
 		//Create a connection string
-		String connectionUrl = "jdbc:mysql://localhost:3306/TravelWebsite?autoReconnect=true&useSSL=false";
+		String connectionUrl = "jdbc:mysql://localhost:3306/TravelWebsite?autoReconnect=true&useSSL=false"; 
 		Connection connection = null;
 		
 		try {

@@ -19,6 +19,5 @@
 		<input type="button" value="View Upcoming Reservations!" onclick="window.location='UpcomingFlights.jsp'" >
 		<input type="button" value="View Past Reservations!" onclick="window.location='PastFlights.jsp'" >
 		<input type="button" value="Visit the Forum!" onclick="window.location='Forum.jsp'" >
-		
 	</body>
 </html>

@@ -5,6 +5,16 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+<%!
+	public boolean checkTime(String time){
+		if(time.matches("\\d{2}:\\d{2}")) return false;
+		String[] timeSplit = time.split(":");
+		if(Integer.parseInt(timeSplit[0]) > 23) return false;
+		if(Integer.parseInt(timeSplit[1]) > 23) return false;
+		return true;
+	}
+%>
+
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -18,7 +28,7 @@
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();		
 			
-			if(!request.getParameter("specificAirlineFilter").isBlank() && request.getParameter("specificAirlineFilter").length() != 2) throw new Exception();
+			if(!request.getParameter("specificAirlineFilter").isBlank() && request.getParameter("specificAirlineFilter").length() != 2) throw new Exception("Airline filter format is incorrect. ");
 
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
@@ -28,10 +38,66 @@
 			queryString.append(" WHERE (SELECT isOneWay FROM Flights WHERE FlightTicket.flightNumber = Flights.flightNumber) = ");
 			queryString.append(request.getParameter("tripType").equals("isOneWay") ? "1" : "0");
 			queryString.append(!request.getParameter("maximumPriceFilter").isBlank() ? " AND FlightTicket.totalPrice <= "+request.getParameter("maximumPriceFilter") : "");
-			System.out.println(!request.getParameter("specificAirlineFilter").isBlank() ? " AND FlightTicket.alid = "+request.getParameter("specificAirlineFilter") : "");
-			queryString.append(!request.getParameter("specificAirlineFilter").isBlank() ? " AND FlightTicket.alid = "+request.getParameter("specificAirlineFilter") : "");
+			
+			if(!request.getParameter("takeOffStartTime").isBlank()){
+				String time = request.getParameter("takeOffStartTime");
+				if(!time.matches("\\d{2}:\\d{2}")) throw new Exception("Take Off / Departure Time format is incorrect. ");
+				String[] timeSplit = time.split(":");
+				if(Integer.parseInt(timeSplit[0]) > 23) throw new Exception("Take Off / Departure Time format is incorrect. ");
+				if(Integer.parseInt(timeSplit[1]) > 59) throw new Exception("Take Off / Departure Time format is incorrect. ");
+				 
+				queryString.append(" AND FlightTicket.departureTime >= '" + request.getParameter("takeOffStartTime")+"'");
+
+			}
+			if(!request.getParameter("takeOffEndTime").isBlank()){
+				String time = request.getParameter("takeOffEndTime");
+				if(!time.matches("\\d{2}:\\d{2}")) throw new Exception("Take Off / Departure Time format is incorrect. ");
+				String[] timeSplit = time.split(":");
+				if(Integer.parseInt(timeSplit[0]) > 23) throw new Exception("Take Off / Departure Time format is incorrect. ");
+				if(Integer.parseInt(timeSplit[1]) > 59) throw new Exception("Take Off / Departure Time format is incorrect. ");	
+				queryString.append(" AND FlightTicket.departureTime <= '" + request.getParameter("takeOffEndTime")+"'");
+			}
+			if(!request.getParameter("landingStartTime").isBlank()){
+				String time = request.getParameter("landingStartTime");
+				if(!time.matches("\\d{2}:\\d{2}")) throw new Exception("Take Off / Departure Time format is incorrect. ");
+				String[] timeSplit = time.split(":");
+				if(Integer.parseInt(timeSplit[0]) > 23) throw new Exception("Take Off / Departure Time format is incorrect. ");
+				if(Integer.parseInt(timeSplit[1]) > 59) throw new Exception("Take Off / Departure Time format is incorrect. ");
+				queryString.append(" AND FlightTicket.destinationTime >= '" + request.getParameter("landingStartTime")+"'");
+			}
+			if(!request.getParameter("landingEndTime").isBlank()){
+				String time = request.getParameter("landingEndTime");
+				if(!time.matches("\\d{2}:\\d{2}")) throw new Exception("Take Off / Departure Time format is incorrect. ");
+				String[] timeSplit = time.split(":");
+				if(Integer.parseInt(timeSplit[0]) > 23) throw new Exception("Take Off / Departure Time format is incorrect. ");
+				if(Integer.parseInt(timeSplit[1]) > 59) throw new Exception("Take Off / Departure Time format is incorrect. ");
+				queryString.append(" AND FlightTicket.destinationTime <= '" + request.getParameter("landingEndTime")+"'");
+			}
+			
+			if(request.getParameter("searchDateType").equals("searchByOneDate")){
+				if(!request.getParameter("trip-start").matches("\\d{4}-\\d{2}-\\d{2}")) throw new Exception("Date format is incorrect. ");
+				queryString.append(" AND FlightTicket.departureDate >= '"+request.getParameter("trip-start")+"'");
+				
+			}else if(request.getParameter("searchDateType").equals("searchByFlexibleDate")){
+				if(!request.getParameter("trip-start").matches("\\d{4}-\\d{2}-\\d{2}")) throw new Exception("Date format is incorrect. ");
+				if(!request.getParameter("trip-end").matches("\\d{4}-\\d{2}-\\d{2}")) throw new Exception("Date format is incorrect. ");
+				queryString.append(" AND FlightTicket.departureDate >= '"+request.getParameter("trip-start")+"' AND FlightTicket.departureDate <= '"+request.getParameter("trip-end")+"'");
+				
+			}
+			
+			if(request.getParameter("sortByDropDown").equals("priceSortBy")){
+				queryString.append(" order by totalPrice asc");
+			}else if(request.getParameter("sortByDropDown").equals("takeOffTime")){
+				queryString.append(" order by departureTime asc");
+			}else if(request.getParameter("sortByDropDown").equals("landingTime")){
+				queryString.append(" order by destinationTime asc");
+			}else if(request.getParameter("sortByDropDown").equals("flightDuration")){
+				queryString.append(" order by DATEDIFF(TIMESTAMP(FlightTicket.departureDate, FlightTicket.departureTime), TIMESTAMP(FlightTicket.destinationDate, FlightTicket.destinationTime))");
+			}
+			
 			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
 			//Run the query against the database.
+			System.out.println(queryString.toString());
 			ResultSet result = stmt.executeQuery(queryString.toString());
 		%>
 			
@@ -70,13 +136,23 @@
 					<td><%= result.getString("destinationTime") %></td>
 					<td><%= result.getString("totalPrice") %></td>
 				</tr>
-				
 
 			<% }
 			//close the connection.
 			db.closeConnection(con);
 			%>
 		</table>
+		
+		<br />
+		
+		<form action="FlightSearch" method = "POST">
+			 Reserve a ticket!<br />
+			 Flight Ticket Number: <input type="text" name="flightTicketNumber"><br/>
+			<input type="submit" name="submit" value="Reserve!" /><br />
+		</form>
+		
+		<input type="button" value="Back to landing page!" onclick="window.location='LandingPage.jsp'" >
+		
 
 			
 		<%} catch (Exception e) {
