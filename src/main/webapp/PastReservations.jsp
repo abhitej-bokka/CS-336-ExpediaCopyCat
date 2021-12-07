@@ -31,10 +31,10 @@
 			LocalDateTime now = LocalDateTime.now(); 
 			String[] dateTimeSplit = dtf.format(now).split(" ");
 			
-			String query = "SELECT * FROM customers WHERE username = '" + "ayush" + "'";
+			String query = "SELECT * FROM customers WHERE username = '" + ApplicationDB.currentUsername + "'";
 			ResultSet result = stmt.executeQuery(query);
 			result.first();
-			queryString.append("SELECT * FROM BoughtBy WHERE cid = "+result.getInt("cid")+" AND (SELECT departureTime FROM (SELECT * FROM FlightTicket WHERE ticketNumber = BoughtBy.ticketNumber AND departureDate <= '"+dateTimeSplit[0]+"') A) <= '"+dateTimeSplit[1]+"'");
+			queryString.append("SELECT * FROM BoughtBy WHERE cid = "+result.getInt("cid")+" AND (SELECT departureTime FROM (SELECT * FROM FlightTicket WHERE ticketNumber = BoughtBy.ticketNumber AND departureDate <= '"+dateTimeSplit[0]+"') A) <= '23:59:59'");
 			System.out.println(queryString.toString());
 			result = stmt.executeQuery(queryString.toString());
 			
