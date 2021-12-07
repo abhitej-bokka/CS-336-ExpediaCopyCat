@@ -8,10 +8,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Forum Page</title>
+<title>Upcoming Flights Page</title>
 </head>
 <body>
-	Welcome to the forum page!
+	Let's look at upcoming flights!
 	<br>
 	<% Date date = new Date();
 	SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy");
@@ -64,7 +64,13 @@
 		//Get the selected radio button from the index.jsp
 		StringBuilder queryString = new StringBuilder();
 		queryString.append("SELECT * FROM Forum");
-		
+		/*
+		queryString.append(" WHERE (SELECT isOneWay FROM Flights WHERE FlightTicket.flightNumber = Flights.flightNumber) = ");
+		queryString.append(request.getParameter("tripType").equals("isOneWay") ? "1" : "0");
+		queryString.append(!request.getParameter("maximumPriceFilter").isBlank() ? " AND FlightTicket.totalPrice <= "+request.getParameter("maximumPriceFilter") : "");
+		System.out.println(!request.getParameter("specificAirlineFilter").isBlank() ? " AND FlightTicket.alid = "+request.getParameter("specificAirlineFilter") : "");
+		queryString.append(!request.getParameter("specificAirlineFilter").isBlank() ? " AND FlightTicket.alid = "+request.getParameter("specificAirlineFilter") : "");
+		*/
 		//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
 		//Run the query against the database.
 		ResultSet result = stmt.executeQuery(queryString.toString());

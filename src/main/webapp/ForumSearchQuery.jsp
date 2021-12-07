@@ -24,15 +24,19 @@
 
 		//Create a SQL statement
 		Statement stmt = con.createStatement();
+		Statement stmt2 = con.createStatement();
 		//Get the selected radio button from the index.jsp	
 		StringBuilder queryString = new StringBuilder();
+		//StringBuilder secondQuery = new StringBuilder();
+		//secondQuery.append("SELECT Forum.qnumber FROM Forum ORDER BY qnumber DESC LIMIT 2");
+		//ResultSet secondresult = stmt2.executeQuery(secondQuery.toString());
+		//String number = secondresult.getString("qnumber");
+		//number++;
+		//System.out.println(number);
 		queryString.append("SELECT * FROM Forum");
 		//queryString.append(!request.getParameter("keyword").isBlank() ? " WHERE Forum.question LIKE '%" + request.getParameter("keyword") + "%' " : "");
-		
 
-		
-
-		if (!(request.getParameter("keyword")==null)) {
+		if (!(request.getParameter("keyword") == null)) {
 			String keyword = request.getParameter("keyword");
 			String[] words = keyword.split("\\W+");
 
@@ -41,21 +45,24 @@
 			//}
 			queryString.append(" WHERE Forum.question LIKE '%" + keyword + "%'");
 			queryString.append(" OR Forum.answer LIKE '%" + keyword + "%'");
+
 			for (int j = 0; j < words.length; j++) {
 		queryString.append(" OR Forum.question LIKE '%" + words[j] + "%'");
 		queryString.append(" OR Forum.answer LIKE '%" + words[j] + "%'");
 		//System.out.println("hi");
 			}
+			
 		}
-		
-		if (!(request.getParameter("question")==null)) {
-			System.out.println("hi");
+
+		if (!(request.getParameter("question") == null)) {
+			//System.out.println("hi");
 			//float qnumber = Float.valueOf(request.getParameter("qnumber"));
-			int qnumber = (int)Math.floor(Math.random()*1000);
-			System.out.println(qnumber);
+			int qnumber = (int) Math.floor(Math.random() * 1000);
+			
+			//System.out.println(qnumber);
 			String question = request.getParameter("question");
 			String answer = "Not Answered Yet.";
-			
+
 			String insert = "INSERT INTO Forum(qnumber, question, answer)" + "VALUES (?, ?, ?)";
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 			PreparedStatement ps = con.prepareStatement(insert);
@@ -68,49 +75,26 @@
 			ps.executeUpdate();
 			//con.close();
 		}
+
 		
-		
-		
-		/*
-		float qnumber = Float.valueOf(request.getParameter("qnumber"));
-		String question = request.getParameter("question");
-		String answer = "Not Answered Yet.";
-		
-		String insert = "INSERT INTO Forum(question)" + "VALUES (?, ?, ?)";
-		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
-		PreparedStatement ps = con.prepareStatement(insert);
-		
-		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-		ps.setFloat(1, qnumber);
-		ps.setString(2, question);
-		ps.setString(3, answer);
-		//Run the query against the DB
-		ps.executeUpdate();
-		con.close();
-		*/
 
 		//Run the query against the DB
 
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 
-		//out.print("insert succeeded");
-
-		//queryString.append(" WHERE Forum.question LIKE '%" + keyword + "%'");
-		//queryString.append(" OR Forum.answer LIKE '%" + keyword + "%'");
-
-		//queryString.append(!request.getParameter("searchQuestions").isBlank() ? " WHERE Forum.question LIKE '%" + request.getParameter("searchQuestions") + "%'" : "%'");
-
+		
 		//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
 		//Run the query against the database.
 		ResultSet result = stmt.executeQuery(queryString.toString());
 	%>
 
 	<!--  Make an HTML table to show the results in: -->
-	
-	<input type="button" value="Go Back to Forum!" onclick="window.location='Forum.jsp'" >
+
+	<input type="button" value="Go Back to Forum!"
+		onclick="window.location='Forum.jsp'">
 	<table>
 		<tr>
-			<td>Question Number</td>
+			<td>Number</td>
 			<td>Question</td>
 			<td>Answer</td>
 		</tr>
