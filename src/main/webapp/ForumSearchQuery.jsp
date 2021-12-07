@@ -63,14 +63,14 @@
 			String question = request.getParameter("question");
 			String answer = "Not Answered Yet.";
 
-			String insert = "INSERT INTO Forum(qnumber, question, answer)" + "VALUES (?, ?, ?)";
+			String insert = "INSERT INTO Forum(question, answer)" + "VALUES (?, ?)";
 			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 			PreparedStatement ps = con.prepareStatement(insert);
 
 			//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-			ps.setInt(1, qnumber);
-			ps.setString(2, question);
-			ps.setString(3, answer);
+			//ps.setInt(1, qnumber);
+			ps.setString(1, question);
+			ps.setString(2, answer);
 			//Run the query against the DB
 			ps.executeUpdate();
 			//con.close();

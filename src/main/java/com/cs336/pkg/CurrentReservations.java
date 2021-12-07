@@ -94,7 +94,7 @@ public class CurrentReservations extends HttpServlet {
 		Connection con = db.getConnection();
 		Statement stmt = con.createStatement();
 		String query = "";
-		if(!request.getParameter("customerName").isBlank()) {
+		if(request.getParameter("customerName") != null && !request.getParameter("customerName").isBlank()) {
 			query = "SELECT * FROM customers WHERE username = '" + request.getParameter("customerName") + "'";
 		}else {
 			query = "SELECT * FROM customers WHERE username = '" + "ayush" + "'";
