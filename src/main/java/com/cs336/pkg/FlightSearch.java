@@ -55,9 +55,7 @@ public class FlightSearch extends HttpServlet {
 					LocalDateTime now = LocalDateTime.now(); 
 					String[] dateTimeSplit = dtf.format(now).split(" ");
 					
-					
-					
-										
+									
 					str = "INSERT INTO BoughtBy VALUES ("+totalPrice+",'"+dateTimeSplit[0]+"','"+dateTimeSplit[1]+"',"+flightNumber+","+Integer.parseInt(ticketNumber)+","+currentUserId+")";
 					System.out.println(str);
 					stmt.execute(str);
@@ -71,9 +69,11 @@ public class FlightSearch extends HttpServlet {
 			if(e instanceof MySQLIntegrityConstraintViolationException) {
 				request.setAttribute("message", "You've already reserved this ticket!");
 				request.getRequestDispatcher("CurrentReservations.jsp").forward(request,response);
+				return;
 			}
 			System.out.println(e.toString());
-			request.setAttribute("message", "");
+			request.setAttribute("message", e.toString());
+			request.getRequestDispatcher("CurrentReservations.jsp").forward(request,response);
 		}
 	}
 
@@ -83,7 +83,7 @@ public class FlightSearch extends HttpServlet {
 		Connection con = db.getConnection();
 		Statement stmt = con.createStatement();
 		
-		String query = "SELECT * FROM customers WHERE username = '" + "ayush" + "'";
+		String query = "SELECT * FROM customers WHERE username = '" + ApplicationDB.currentUsername + "'";
 		System.out.println(query);
 		ResultSet result = stmt.executeQuery(query);
 		
