@@ -50,6 +50,7 @@ public class FlightSearch extends HttpServlet {
 
 					int totalPrice = result.getInt("totalPrice");
 					int flightNumber = result.getInt("flightNumber");
+					//String classy = result.getString("class");
 					System.out.println(totalPrice);
 					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
 					LocalDateTime now = LocalDateTime.now(); 
