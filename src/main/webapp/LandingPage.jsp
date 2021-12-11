@@ -22,5 +22,6 @@
 		
 
 		<input type="button" value="Visit the Forum!" onclick="window.location='Forum.jsp'" >
+		<input type="button" value="View the Waitlist!" onclick="window.location='Waitlist.jsp'" >
 	</body>
 </html>

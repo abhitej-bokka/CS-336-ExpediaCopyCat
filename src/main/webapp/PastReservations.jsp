@@ -53,6 +53,9 @@
 			<td>Departure Time</td>
 			<td>Destination Date</td>
 			<td>Destination Time</td>
+			<td>Airline ID</td>
+			<td>Class</td>
+			<td>Seat Number</td>
 			
 		</tr>
 			<%
@@ -78,6 +81,9 @@
 					<td><%= ticketResultSet.getString("departureTime") %></td>
 					<td><%= ticketResultSet.getString("destinationDate") %></td>
 					<td><%= ticketResultSet.getString("destinationTime") %></td>
+					<td><%= ticketResultSet.getString("alid") %></td>
+					<td><%= ticketResultSet.getString("class") %></td>
+					<td><%= ticketResultSet.getString("seatNumber") %></td>
 				</tr>
 
 			<% }

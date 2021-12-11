@@ -15,11 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 
-@WebServlet("/CurrentReservations")
-public class CurrentReservations extends HttpServlet {
+@WebServlet("/DCurrentReservations")
+public class DCurrentReservations extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public CurrentReservations() {
+    public DCurrentReservations() {
 
     }
 
@@ -29,7 +29,6 @@ public class CurrentReservations extends HttpServlet {
 		
 		if(submitType.equals("Remove Reservation!")) {
 			try {
-				System.out.println("HEYEYEYYEYYYEYEY------");
 				StringBuilder queryString = new StringBuilder();
 				StringBuilder also = new StringBuilder();
 				StringBuilder third = new StringBuilder();
@@ -62,77 +61,103 @@ public class CurrentReservations extends HttpServlet {
 				
 				
 				
-				/*
+				
 				if(!result.first()) {
 					request.setAttribute("message", "This is the first error!");
 					request.getRequestDispatcher("CurrentReservations.jsp").forward(request,response);
 					request.setAttribute("message", "");
 				}
-				*/
 				System.out.println("ab--hitejSaysHello: "+also.toString());
 				
-				String classy;
+				String classyy;
 				if(result.getString("class").equals("Economy")) {
-					classy = "Economy";
+					classyy = "Economy";
 				}else {
-					classy = "Business";
+					classyy = "Business";
 				}
 				
 				
-				if(result.getString("class").equals("Economy")) {
-					request.setAttribute("message", "Hey, you got an economy ticket so just letting you know you will have to pay a cancellation fee. Click again and pay: ");
-					request.getRequestDispatcher("DCurrentReservations.jsp").forward(request,response);
-					request.setAttribute("message", "");
+				
+				if(!(result.getString("class").equals("Economy"))) {
 					
-					System.out.println("Executedkjerkjrenjk");
-					
-				}else {
-					
-						String str = "DELETE FROM BoughtBy WHERE ticketNumber = "+Integer.parseInt(ticketNumber)+" AND cid = "+currentUserId;
-						stmt.execute(str);
-						
-						ResultSet resultalso = stmt.executeQuery(also.toString());
-						resultalso.first();
-						
-						int flightNumber = resultalso.getInt("flightNumber");
-						String alid = resultalso.getString("alid");
-						System.out.println(flightNumber);
-						System.out.println(alid);
-						third.append("SELECT * FROM RSEATS WHERE flightNumber = "+flightNumber+" AND alid = '"+alid+"'");
-						System.out.println("yee: "+third.toString());
-						ResultSet resultthird = stmt.executeQuery(third.toString());
-						resultthird.first();
-						
-						int ESeats = resultthird.getInt("ESeats");
-						int BSeats = resultthird.getInt("BSeats");
-						str = "DELETE FROM RSEATS WHERE flightNumber = "+flightNumber+" AND alid = '"+alid+"'";
-						stmt.execute(str);
-						if(classy.equals("Economy")) {
-							ESeats--;
-							str = "INSERT INTO RSEATS VALUES ("+flightNumber+",'"+alid+"',"+ESeats+","+BSeats+")";
-						}else {
-							BSeats--;
-							str = "INSERT INTO RSEATS VALUES ("+flightNumber+",'"+alid+"',"+ESeats+","+BSeats+")";
-						}
-						stmt.execute(str);
-						
-						//add airline ID and class
-						System.out.println(str);
-					/*
-					str = "SELECT FROM RSEATS WHERE ticketNumber = "+Integer.parseInt(ticketNumber)+" AND cid = "+currentUserId;
-					
-					str = "DELETE FROM RSEATS WHERE ticketNumber = "+Integer.parseInt(ticketNumber)+" AND cid = "+currentUserId;
+					String str = "DELETE FROM BoughtBy WHERE ticketNumber = "+Integer.parseInt(ticketNumber)+" AND cid = "+currentUserId;
 					stmt.execute(str);
-					
-					str = "INSERT INTO RSEATS VALUES ("+totalPrice+",'"+dateTimeSplit[0]+"')";
-					*/
-					
 					request.setAttribute("message", ticketNumber+" is no longer reserved!");
 					request.getRequestDispatcher("CurrentReservations.jsp").forward(request,response);
 				
+					
+					System.out.println("Executedayya");
+					
+				}else {
+					
+					String str = "DELETE FROM BoughtBy WHERE ticketNumber = "+Integer.parseInt(ticketNumber)+" AND cid = "+currentUserId;
+					stmt.execute(str);
+					
+					ResultSet resultalso = stmt.executeQuery(also.toString());
+					resultalso.first();
+					
+					int flightNumber = resultalso.getInt("flightNumber");
+					String alid = resultalso.getString("alid");
+					System.out.println(flightNumber);
+					System.out.println(alid);
+					third.append("SELECT * FROM RSEATS WHERE flightNumber = "+flightNumber+" AND alid = '"+alid+"'");
+					System.out.println("yee: "+third.toString());
+					ResultSet resultthird = stmt.executeQuery(third.toString());
+					resultthird.first();
+					
+					int ESeats = resultthird.getInt("ESeats");
+					int BSeats = resultthird.getInt("BSeats");
+					str = "DELETE FROM RSEATS WHERE flightNumber = "+flightNumber+" AND alid = '"+alid+"'";
+					stmt.execute(str);
+					if(classyy.equals("Economy")) {
+						ESeats--;
+						str = "INSERT INTO RSEATS VALUES ("+flightNumber+",'"+alid+"',"+ESeats+","+BSeats+")";
+					}else {
+						BSeats--;
+						str = "INSERT INTO RSEATS VALUES ("+flightNumber+",'"+alid+"',"+ESeats+","+BSeats+")";
+					}
+					stmt.execute(str);
+					
+					//add airline ID and class
+					System.out.println(str);
 				}
 				
+				/*
+				if(result.getString("class").equals("Economy") && check == 1) {
+					String str = "DELETE FROM BoughtBy WHERE ticketNumber = "+Integer.parseInt(ticketNumber)+" AND cid = "+currentUserId;
+					stmt.execute(str);
+					request.setAttribute("message", ticketNumber+" is no longer reserved!");
+					request.getRequestDispatcher("CurrentReservations.jsp").forward(request,response);
+					System.out.println("Executed_twice");
+					check = 0;
+				}
+				 */
+		
+				//Get parameters from the HTML form at the index.jsp
 				
+				
+				
+				/*
+				 ApplicationDB db = new ApplicationDB();	
+				Connection con = db.getConnection();		
+			
+			//Create a SQL statement
+			Statement stmt = con.createStatement();
+			//Get the selected radio button from the index.jsp
+			StringBuilder queryString = new StringBuilder();
+			
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
+			LocalDateTime now = LocalDateTime.now(); 
+			String[] dateTimeSplit = dtf.format(now).split(" ");
+			
+			String query = "SELECT * FROM customers WHERE username = '" + ApplicationDB.currentUsername + "'";
+			ResultSet result = stmt.executeQuery(query);
+			result.first();
+			queryString.append("SELECT * FROM BoughtBy WHERE cid = "+result.getInt("cid")+" AND (SELECT departureTime FROM (SELECT * FROM FlightTicket WHERE ticketNumber = BoughtBy.ticketNumber AND departureDate >= '"+dateTimeSplit[0]+"') A) >= '00:00:00'");		
+			System.out.println("Hello: "+queryString.toString());
+			result = stmt.executeQuery(queryString.toString());
+
+				 */
 				
 				
 				

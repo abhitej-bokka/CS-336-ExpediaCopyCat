@@ -53,6 +53,9 @@
 			<td>Departure Time</td>
 			<td>Destination Date</td>
 			<td>Destination Time</td>
+			<td>Airline ID</td>
+			<td>Class</td>
+			<td>Seat Number</td>
 			
 		</tr>
 			<%
@@ -78,6 +81,11 @@
 					<td><%= ticketResultSet.getString("departureTime") %></td>
 					<td><%= ticketResultSet.getString("destinationDate") %></td>
 					<td><%= ticketResultSet.getString("destinationTime") %></td>
+					<td><%= ticketResultSet.getString("alid") %></td>
+					<td><%= ticketResultSet.getString("class") %></td>
+					<td><%= ticketResultSet.getString("seatNumber") %></td>
+					<td><%= ticketResultSet.getString("bookingFee") %></td>
+					<td><%= ticketResultSet.getString("cancelCharge") %></td>
 				</tr>
 
 			<% }
@@ -87,7 +95,7 @@
 		</table>
 		
 		<br />
-		
+		If the ticket you return is an Economy ticket, you will have to pay a cancel charge.
 		<form action="CurrentReservations" method = "POST">
 			 Remove a reservation!<br />
 			 Flight Ticket Number: <input type="text" name="flightTicketNumber"><br/>
@@ -95,6 +103,7 @@
 		</form>
 		
 		<br/>
+		
 		
 		<input type="button" value="Back to landing page!" onclick="window.location='LandingPage.jsp'" >
 		
