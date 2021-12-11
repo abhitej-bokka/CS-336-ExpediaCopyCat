@@ -29,15 +29,32 @@
 			Connection con = db.getConnection();		
 			
 			if(!request.getParameter("specificAirlineFilter").isBlank() && request.getParameter("specificAirlineFilter").length() != 2) throw new Exception("Airline filter format is incorrect. ");
+			if(!request.getParameter("fromAirport").isBlank() && !request.getParameter("fromAirport").matches("[A-Z]{3}")) throw new Exception("From airport format is incorrect. ");
+			if(!request.getParameter("toAirport").isBlank() && !request.getParameter("toAirport").matches("[A-Z]{3}")) throw new Exception("To airport format is incorrect. ");
+
 
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			//Get the selected radio button from the index.jsp
 			StringBuilder queryString = new StringBuilder();
 			queryString.append("SELECT * FROM FlightTicket");
+			
+			
+			
 			queryString.append(" WHERE (SELECT isOneWay FROM Flights WHERE FlightTicket.flightNumber = Flights.flightNumber) = ");
 			queryString.append(request.getParameter("tripType").equals("isOneWay") ? "1" : "0");
+			
+			if(!request.getParameter("fromAirport").isBlank()) {
+				queryString.append(" AND fromAirport = '"+request.getParameter("fromAirport")+"'");
+			}
+			if(!request.getParameter("toAirport").isBlank()){
+				queryString.append(" AND toAirport = '"+request.getParameter("toAirport")+"'");
+			}
+			
 			queryString.append(!request.getParameter("maximumPriceFilter").isBlank() ? " AND FlightTicket.totalPrice <= "+request.getParameter("maximumPriceFilter") : "");
+			queryString.append(!request.getParameter("numberOfStopsFilter").isBlank() ? " AND FlightTicket.numberOfStops = "+request.getParameter("numberOfStopsFilter") : "");
+			queryString.append(!request.getParameter("specificAirlineFilter").isBlank() ? " AND FlightTicket.alid = '"+request.getParameter("specificAirlineFilter")+"'" : "");
+			
 			
 			if(!request.getParameter("takeOffStartTime").isBlank()){
 				String time = request.getParameter("takeOffStartTime");
@@ -74,9 +91,9 @@
 				queryString.append(" AND FlightTicket.destinationTime <= '" + request.getParameter("landingEndTime")+"'");
 			}
 			
-			if(request.getParameter("searchDateType").equals("searchByOneDate")){
-				if(!request.getParameter("trip-start").matches("\\d{4}-\\d{2}-\\d{2}")) throw new Exception("Date format is incorrect. ");
-				queryString.append(" AND FlightTicket.departureDate >= '"+request.getParameter("trip-start")+"'");
+			if(request.getParameter("searchDateType").equals("searchBySpecificDate")){
+				if(!request.getParameter("trip-start-single-date").matches("\\d{4}-\\d{2}-\\d{2}")) throw new Exception("Date format is incorrect. ");
+				queryString.append(" AND FlightTicket.departureDate = '"+request.getParameter("trip-start-single-date")+"'");
 				
 			}else if(request.getParameter("searchDateType").equals("searchByFlexibleDate")){
 				if(!request.getParameter("trip-start").matches("\\d{4}-\\d{2}-\\d{2}")) throw new Exception("Date format is incorrect. ");
@@ -92,7 +109,7 @@
 			}else if(request.getParameter("sortByDropDown").equals("landingTime")){
 				queryString.append(" order by destinationTime asc");
 			}else if(request.getParameter("sortByDropDown").equals("flightDuration")){
-				queryString.append(" order by DATEDIFF(TIMESTAMP(FlightTicket.departureDate, FlightTicket.departureTime), TIMESTAMP(FlightTicket.destinationDate, FlightTicket.destinationTime))");
+				queryString.append(" order by TIMESTAMPDIFF(minute, TIMESTAMP(departureDate, departureTime), TIMESTAMP(destinationDate, destinationTime)) asc");
 			}
 			
 			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
@@ -117,9 +134,12 @@
 			<td>Destination Date</td>
 			<td>Destination Time</td>
 			<td>Total Price</td>
+			<td>Number of Stops</td>
 		</tr>
 			<%
+			
 			//parse out the results
+			
 			while (result.next()) { %>
 				<tr>    
 					<td><%= result.getString("ticketNumber") %></td>
@@ -135,6 +155,7 @@
 					<td><%= result.getString("destinationDate") %></td>
 					<td><%= result.getString("destinationTime") %></td>
 					<td><%= result.getString("totalPrice") %></td>
+					<td><%= result.getString("numberOfStops") %></td>
 				</tr>
 
 			<% }
