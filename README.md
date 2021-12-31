@@ -1,4 +1,4 @@
-# CS 336 -- Principles of Information and Data Management Fall 2021
+# CS 336 - Principles of Information and Data Management - Fall 2021
 Requirements Specification for the Database Programming Project
 
 
