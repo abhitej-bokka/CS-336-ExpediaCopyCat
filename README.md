@@ -1,7 +1,7 @@
 # 336TravelProject
 
 
-## Introduction
+### Introduction
 
 In this project, we designed and implemented a relational database system to support the operations of an online travel reservation system. 
 We used HTML for the user interface, MySQL for the database server, and Java, JDBC for connectivity between the user interface and 
