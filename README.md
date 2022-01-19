@@ -9,6 +9,10 @@ We used HTML for the user interface, MySQL for the database server, and Java, JD
 the database server. 
 We used a web server that to host our web application (Tomcat) as well as a MySQL server.
 
+I have a demo video here to showcase the functionality we implemented:
+https://drive.google.com/file/d/1m0qyrTcElhipspfPmGvuw93QKJAcuoKE/view?usp=sharing
+
+
 ### Customer-Level Functionality
 Customers should be thought of as online airline ticket buyers and should be able to easily 
 browse your online travel reservation system on the web and buy flight tickets. In particular, they 
